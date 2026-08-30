@@ -29,7 +29,23 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        // Create the sound effect player if it doesn't exist
+        if (soundEffectsPlayer == null)
+        {
+            soundEffectsPlayer = gameObject.AddComponent<AudioSource>();
+            soundEffectsPlayer.volume = sfxVolume;
+        }
+
+        // Create the music player if it doesn't exist
+        if (musicPlayer == null)
+        {
+            musicPlayer = gameObject.AddComponent<AudioSource>();
+            musicPlayer.volume = musicVolume;
+            musicPlayer.loop = true;
+        }
     }
+
     public void PlaySound(AudioClip clip)
     {
         if (clip != null)
@@ -53,4 +69,4 @@ public class AudioManager : MonoBehaviour
         musicPlayer.Stop();
     }
 
-}
+} 
