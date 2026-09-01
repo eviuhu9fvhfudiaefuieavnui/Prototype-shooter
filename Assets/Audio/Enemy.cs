@@ -6,6 +6,21 @@ public class Enemy : MonoBehaviour
 {
     public AudioClip deathSound;
     public int health = 1;
+    public float speed = 2f;
+    private Transform player;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    private void Update()
+    {
+        if (player != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        }
+    }
 
     public void TakeDamage(int damage)
     {
@@ -20,7 +35,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        // Play death sound
         AudioManager.instance.PlaySound(deathSound);
         Debug.Log("Enemy died!");
         Destroy(gameObject);

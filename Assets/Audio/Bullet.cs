@@ -10,13 +10,11 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        // Move the bullet in a direction
         GetComponent<Rigidbody2D>().velocity = direction * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // If bullet hits enemy, damage it
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null)
         {

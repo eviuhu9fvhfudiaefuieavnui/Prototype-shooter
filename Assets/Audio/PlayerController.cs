@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public int health = 1;
+    public AudioClip deathSound;
     private Rigidbody2D rb;
 
     private void Start()
@@ -14,15 +16,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Get movement input (WASD)
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
-
-        // Move the player
         Vector2 movement = new Vector2(moveX, moveY).normalized;
         rb.velocity = movement * moveSpeed;
 
-        // Shoot on left click
         if (Input.GetMouseButtonDown(0))
         {
             Shoot();
@@ -32,5 +30,19 @@ public class PlayerController : MonoBehaviour
     private void Shoot()
     {
         GetComponent<PlayerShoot>().Fire();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            health--;
+            if (health <= 0)
+            {
+                AudioManager.instance.PlaySound(deathSound);
+                Debug.Log("Player died!");
+                Destroy(gameObject);
+            }
+        }
     }
 }
