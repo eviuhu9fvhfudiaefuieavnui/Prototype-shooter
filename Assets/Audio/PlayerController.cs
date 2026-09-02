@@ -1,47 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public int health = 1;
-    public AudioClip deathSound;
-    private Rigidbody2D rb;
+    public float moveSpeed = 5f; // How fast player moves
+    public int health = 3; // Player health
+    public AudioClip deathSound; // Sound when player dies
+    public AudioClip hurtSound; // Sound when player gets hit
+    private Rigidbody2D rb; // Player physics
 
     private void Start()
     {
+        // Get physics component
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
+        // Get WASD input
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
-        Vector2 movement = new Vector2(moveX, moveY).normalized;
-        rb.velocity = movement * moveSpeed;
 
+        // Move player
+        rb.velocity = new Vector2(moveX, moveY) * moveSpeed;
+
+        // Left click to shoot
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            GetComponent<PlayerShoot>().Fire();
         }
-    }
-
-    private void Shoot()
-    {
-        GetComponent<PlayerShoot>().Fire();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Enemy touches player
         if (collision.CompareTag("Enemy"))
         {
             health--;
+            Debug.Log("Player hit! Health: " + health);
+
             if (health <= 0)
             {
+                // Play death sound
                 AudioManager.instance.PlaySound(deathSound);
                 Debug.Log("Player died!");
+
+                // Play lose sound
+                FindObjectOfType<GameManager>().Lose();
+
+                // Remove player
                 Destroy(gameObject);
+            }
+            else
+            {
+                // Play hurt sound when hit but not dead
+                AudioManager.instance.PlaySound(hurtSound);
             }
         }
     }

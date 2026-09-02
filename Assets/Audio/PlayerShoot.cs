@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
@@ -10,13 +8,16 @@ public class PlayerShoot : MonoBehaviour
 
     public void Fire()
     {
-        // Play gun sound
         AudioManager.instance.PlaySound(gunSound);
 
-        // Spawn bullet
         if (bulletPrefab != null && firePoint != null)
         {
-            Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
+            Vector2 direction = (mousePos - firePoint.position).normalized;
+
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+            bullet.GetComponent<Bullet>().Launch(direction);
         }
 
         Debug.Log("Gun fired!");
