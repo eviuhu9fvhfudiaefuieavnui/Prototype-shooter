@@ -2,34 +2,46 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public AudioClip backgroundMusic; // Background music
-    public AudioClip victorySound; // Sound when all enemies killed
-    public AudioClip loseSound; // Sound when player dies
+    public AudioClip backgroundMusic; // Music that plays throughout the game
+    public AudioClip victorySound; // Sound that plays when all enemies are killed
+    public AudioClip loseSound; // Sound that plays when player dies
 
     private void Start()
     {
-        // Play background music when game starts
+        // When the game starts, play the background music
         if (backgroundMusic != null)
         {
             AudioManager.instance.PlayMusic(backgroundMusic);
         }
     }
 
-    // Call when all enemies are dead
+    // This runs when all enemies are dead
     public void Victory()
     {
+        // Stop the background music so it doesnt clash with victory sound
         AudioManager.instance.StopMusic();
+
+        // Play the victory sound
         AudioManager.instance.PlaySound(victorySound);
-        Time.timeScale = 0f; // Freeze game
+
+        // Freeze the game so nothing moves after winning
+        Time.timeScale = 0f;
+
         Debug.Log("Victory!");
     }
 
-    // Call when player dies
+    // This runs when the player dies
     public void Lose()
     {
+        // Stop the background music so it doesnt clash with lose sound
         AudioManager.instance.StopMusic();
+
+        // Play the lose sound
         AudioManager.instance.PlaySound(loseSound);
-        Time.timeScale = 0f; // Freeze game
+
+        // Freeze the game so nothing moves after losing
+        Time.timeScale = 0f;
+
         Debug.Log("You lost!");
     }
 }

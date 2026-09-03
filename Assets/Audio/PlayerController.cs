@@ -2,28 +2,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f; // How fast player moves
-    public int health = 3; // Player health
+    public float moveSpeed = 5f; // How fast the player moves
+    public int health = 3; // Player starts with 3 health points
     public AudioClip deathSound; // Sound when player dies
-    public AudioClip hurtSound; // Sound when player gets hit
-    private Rigidbody2D rb; // Player physics
+    public AudioClip hurtSound; // Sound when player gets hit but survives
+    private Rigidbody2D rb; // Controls player physics movement
 
     private void Start()
     {
-        // Get physics component
+        // Get the Rigidbody2D so we can move the player using physics
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        // Get WASD input
+        // Get keyboard input from WASD or arrow keys (-1 to 1)
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        // Move player
+        // Move the player based on input and speed
         rb.velocity = new Vector2(moveX, moveY) * moveSpeed;
 
-        // Left click to shoot
+        // Left click mouse to shoot
         if (Input.GetMouseButtonDown(0))
         {
             GetComponent<PlayerShoot>().Fire();
@@ -32,27 +32,29 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Enemy touches player
+        // Check if what touched player is an enemy
         if (collision.CompareTag("Enemy"))
         {
+            // Take away 1 health point
             health--;
             Debug.Log("Player hit! Health: " + health);
 
+            // If health is 0 or less, player dies
             if (health <= 0)
             {
                 // Play death sound
                 AudioManager.instance.PlaySound(deathSound);
                 Debug.Log("Player died!");
 
-                // Play lose sound
+                // Tell GameManager to trigger lose state
                 FindObjectOfType<GameManager>().Lose();
 
-                // Remove player
+                // Remove player from scene
                 Destroy(gameObject);
             }
             else
             {
-                // Play hurt sound when hit but not dead
+                // Player got hit but still alive, play hurt sound
                 AudioManager.instance.PlaySound(hurtSound);
             }
         }
