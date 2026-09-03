@@ -26,11 +26,11 @@ public class PlayerController : MonoBehaviour
         // Left click mouse to shoot
         if (Input.GetMouseButtonDown(0))
         {
-            GetComponent<PlayerShoot>().Fire();
+            GetComponent<PlayerShoot>().Fire(); //finds playershoot script on the object and calls the fire function
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // runs when when the player collides with enemy or wall
     {
         // Check if what touched player is an enemy
         if (collision.CompareTag("Enemy"))

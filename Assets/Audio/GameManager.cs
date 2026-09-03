@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
         // When the game starts, play the background music
         if (backgroundMusic != null)
         {
-            AudioManager.instance.PlayMusic(backgroundMusic);
+            AudioManager.instance.PlayMusic(backgroundMusic); //tells the audio manager to play the background music
         }
     }
 
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         // Freeze the game so nothing moves after winning
         Time.timeScale = 0f;
 
-        Debug.Log("Victory!");
+        Debug.Log("Victory!");  // sends message to the console that the player won
     }
 
     // This runs when the player dies
@@ -42,6 +42,6 @@ public class GameManager : MonoBehaviour
         // Freeze the game so nothing moves after losing
         Time.timeScale = 0f;
 
-        Debug.Log("You lost!");
+        Debug.Log("You lost!"); // sends message to the console that the player lost
     }
 }

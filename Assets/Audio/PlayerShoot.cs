@@ -27,7 +27,7 @@ public class PlayerShoot : MonoBehaviour
             // Launch the bullet in the direction of the mouse
             bullet.GetComponent<Bullet>().Launch(direction);
         }
-
+        //sends message to console that gun fired
         Debug.Log("Gun fired!");
     }
 }
