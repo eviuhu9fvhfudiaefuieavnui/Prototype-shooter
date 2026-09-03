@@ -286,7 +286,8 @@ MonoBehaviour:
   moveSpeed: 5
   health: 1
   deathSound: {fileID: 8300000, guid: b371c124d5924de42a810e591ce48d98, type: 3}
-  hurtSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 31d82764997244a47b976e024917bf91, type: 3}
+  wallHitSound: {fileID: 8300000, guid: 578cc82fe60e5dc4a8f97ad2aeb8493a, type: 3}
 --- !u!50 &78870240
 Rigidbody2D:
   serializedVersion: 4
@@ -407,6 +408,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepSound: {fileID: 0}
   footstepInterval: 0.1
+  footstepTimer: 0
+  rb: {fileID: 0}
 --- !u!1 &221645636
 GameObject:
   m_ObjectHideFlags: 0
