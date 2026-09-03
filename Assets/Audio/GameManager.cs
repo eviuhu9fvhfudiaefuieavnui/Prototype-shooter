@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     {
         AudioManager.instance.StopMusic();
         AudioManager.instance.PlaySound(victorySound);
+        Time.timeScale = 0f; // Freeze game
         Debug.Log("Victory!");
     }
 
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     {
         AudioManager.instance.StopMusic();
         AudioManager.instance.PlaySound(loseSound);
+        Time.timeScale = 0f; // Freeze game
         Debug.Log("You lost!");
     }
 }
